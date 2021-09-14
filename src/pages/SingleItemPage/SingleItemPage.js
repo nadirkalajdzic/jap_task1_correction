@@ -77,7 +77,7 @@ function SingleItemPage() {
               <StyledRating
                 name="read-only"
                 style={{ marginBottom: 10, height: 30 }}
-                value={item.averageRating}
+                value={item.averageRating.toFixed(2)}
                 precision={0.1}
                 readOnly
               />
@@ -87,7 +87,7 @@ function SingleItemPage() {
             Release date: {new Date(item.releaseDate).toDateString()}
           </div>
           <div className="margin-top font-styling inline">
-            <div>Categories</div>
+            <div>Categories:</div>
             <div className="single-item-page-chips">
               {item.categories.map((x, index) => {
                 return (
@@ -102,7 +102,7 @@ function SingleItemPage() {
             </div>
           </div>
           <div className="font-styling inline">
-            <div>Actors</div>
+            <div>Actors:</div>
             <div className="single-item-page-chips">
               {item.actors.map((x, index) => {
                 return (
