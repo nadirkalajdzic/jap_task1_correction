@@ -10,7 +10,7 @@
 
 .item-list {
   margin: 5% auto 5%;
-  width: 320px;
+  width: clamp(320px, 300px + 10vw, 400px);
 }
 
 .item-list::-webkit-scrollbar {

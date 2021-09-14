@@ -4,7 +4,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
   root: {
-    width: 300,
+    width: "clamp(250px, 250px + 1vw , 300px)",
     boxShadow: "none",
     margin: "0 auto",
   },

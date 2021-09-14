@@ -2,17 +2,14 @@ import React from "react";
 
 import ItemCard from "../ItemCard/ItemCard";
 import Button from "@material-ui/core/Button";
-
-import { useStyles } from "../ItemCard/Style";
-import "./ItemList.css";
 import { Virtuoso } from "react-virtuoso";
 
-function ItemList({ itemList, setPageNumber }) {
-  const classes = useStyles();
+import "./ItemList.css";
+import styled from "styled-components";
 
+function ItemList({ itemList, setPageNumber }) {
   const showMore = () => setPageNumber((prevState) => prevState + 1);
 
-  console.log(itemList);
   return (
     <Virtuoso
       className="item-list"
