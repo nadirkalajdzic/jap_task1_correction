@@ -5,37 +5,42 @@ import Button from "@material-ui/core/Button";
 
 import { useStyles } from "../ItemCard/Style";
 import "./ItemList.css";
+import { Virtuoso } from "react-virtuoso";
 
 function ItemList({ itemList, setPageNumber }) {
   const classes = useStyles();
 
   const showMore = () => setPageNumber((prevState) => prevState + 1);
 
+  console.log(itemList);
   return (
-    <div className="item-list">
-      <div className="item-item-list">
-        {itemList.map((x, index) => {
+    <Virtuoso
+      className="item-list"
+      style={{ height: 600 }}
+      data={itemList}
+      totalCount={itemList.length}
+      itemContent={(index, item) => <ItemCard item={item} />}
+      components={{
+        Footer: () => {
           return (
-            <div className="single-item" key={index}>
-              <ItemCard item={x} />
-            </div>
+            itemList.length % 10 <= 0 && (
+              <div className="item-list-show-more">
+                <Button
+                  variant="outlined"
+                  style={{
+                    color: "white",
+                    backgroundColor: "var(--button-color)",
+                  }}
+                  onClick={showMore}
+                >
+                  VIEW MORE RESULTS
+                </Button>
+              </div>
+            )
           );
-        })}
-      </div>
-      <div
-        className={`item-list-show-more ${
-          itemList.length % 10 > 0 && "hidden"
-        }`}
-      >
-        <Button
-          variant="outlined"
-          className={classes.button}
-          onClick={showMore}
-        >
-          VIEW MORE RESULTS
-        </Button>
-      </div>
-    </div>
+        },
+      }}
+    />
   );
 }
 

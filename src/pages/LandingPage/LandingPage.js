@@ -19,6 +19,7 @@ const useStyle = makeStyles({
     fontWeight: 500,
     borderColor: "var(--button-color)",
     borderWidth: 2,
+    fontSize: "clamp(12px, 5px + 2vw, 16px)",
   },
   selected: {
     backgroundColor: "red",
