@@ -1,7 +1,7 @@
 import ApiClient from "./apiClient";
 
 let apiClient = ApiClient.createInstance(
-  "rating",
+  "ratings",
   JSON.parse(localStorage.getItem("session"))?.token
 );
 
