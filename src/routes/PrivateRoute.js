@@ -8,7 +8,9 @@ function PrivateRoute({ title, exact, path, component, authorize }) {
 
   document.title = `Moviesapp | ${title}`;
 
-  return <Route exact={exact} path={path} component={component} />;
+  return (
+    <Route exact={exact !== undefined} path={path} component={component} />
+  );
 }
 
 export default PrivateRoute;

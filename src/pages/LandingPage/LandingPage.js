@@ -44,6 +44,7 @@ function LandingPage() {
     getMedias(toggle, pageNumber, 10)
       .then((res) => setItemList(itemList.concat(res.data.data)))
       .catch(() => toast.error("Failed to load movies"));
+    // eslint-disable-next-line
   }, [toggle, pageNumber]);
 
   return (

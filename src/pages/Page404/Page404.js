@@ -1,19 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-
-import { Button } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-
 import Page from "../../components/Page/Page";
-
 import "./Page404.css";
-import useStyle from "./Styles";
 import CustomButton from "../../components/CustomButton/CustomButton";
 
 function Page404() {
-  const classes = useStyle();
   const history = useHistory();
-
   const routeTo = () => history.push("/");
 
   return (

@@ -38,6 +38,7 @@ export default function LandingSearchBar({ toggle }) {
     setIsLoading(true);
     const fetchData = returnFetchData();
     return () => clearTimeout(fetchData);
+    // eslint-disable-next-line
   }, [inputValue, toggle]);
 
   const routeToItem = (val, newVal) => {

@@ -1,9 +1,6 @@
 import React from "react";
-
 import ItemCard from "../ItemCard/ItemCard";
-import Button from "@material-ui/core/Button";
 import { Virtuoso } from "react-virtuoso";
-
 import "./ItemList.css";
 import CustomButton from "../CustomButton/CustomButton";
 

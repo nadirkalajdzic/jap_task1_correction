@@ -14,33 +14,33 @@ function Routes() {
     <Router basename="">
       <Switch>
         <PrivateRoute
-          exact={true}
+          exact
           path={links.landing.url}
           component={LandingPage}
           title="Home"
         />
         <PrivateRoute
-          exact={true}
+          exact
           path={links.home.url}
           component={LandingPage}
           title="Home"
         />
         <PrivateRoute
-          exact={true}
+          exact
           path={links.login.url}
           authorize
           component={LoginPage}
           title="Login"
         />
         <PrivateRoute
-          exact={true}
+          exact
           path={links.register.url}
           authorize
           component={RegisterPage}
           title="Register"
         />
         <PrivateRoute
-          exact={true}
+          exact
           path={links.itemId.url}
           component={SingleItemPage}
           title="Movie"
