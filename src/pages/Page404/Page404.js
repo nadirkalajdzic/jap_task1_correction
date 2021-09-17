@@ -8,6 +8,7 @@ import Page from "../../components/Page/Page";
 
 import "./Page404.css";
 import useStyle from "./Styles";
+import CustomButton from "../../components/CustomButton/CustomButton";
 
 function Page404() {
   const classes = useStyle();
@@ -20,13 +21,11 @@ function Page404() {
       <div className="page-error">
         <div>404</div>
         <div>
-          <Button
-            startIcon={<ArrowBackIcon />}
-            className={classes.button}
+          <CustomButton
             onClick={routeTo}
-          >
-            Back Home
-          </Button>
+            label="Back Home"
+            startIcon={<ArrowBackIcon />}
+          />
         </div>
       </div>
     </Page>

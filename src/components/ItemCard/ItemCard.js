@@ -13,14 +13,11 @@ import Paragraph from "antd/lib/typography/Paragraph";
 import { Popover } from "antd";
 
 import { useHistory } from "react-router-dom";
-
-import Button from "@material-ui/core/Button";
 import popcorn from "../../popcornimg";
-
-import { addRating } from "../../api/ratingsApi";
-
+import { addRating } from "../../services/ratingService";
 import { useStyles, StyledRating } from "./Style";
 import "./ItemCard.css";
+import CustomButton from "../CustomButton/CustomButton";
 
 function ItemCard({ item }) {
   const [hoveredRating, setHoveredRating] = useState(0);
@@ -49,7 +46,7 @@ function ItemCard({ item }) {
             image={item.imageUrl}
             fallback={popcorn}
             title="Image"
-          ></CardMedia>
+          />
           <div className={classes.title}>
             <Paragraph ellipsis={{ rows: 2, expandable: false }}>
               {item.title}
@@ -89,13 +86,16 @@ function ItemCard({ item }) {
           </div>
         </CardContent>
         <CardActions className={classes.align}>
-          <Button
+          <CustomButton
             variant="outlined"
-            className={classes.button}
+            label="GO TO MOVIE"
             onClick={goToMovie}
-          >
-            GO TO MOVIE
-          </Button>
+            style={{
+              width: 150,
+              backgroundColor: "white",
+              color: "var(--black-color)",
+            }}
+          />
         </CardActions>
       </Card>
     </div>

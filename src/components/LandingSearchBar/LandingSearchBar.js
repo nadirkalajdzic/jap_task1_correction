@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
-
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from "@material-ui/icons/Search";
-
 import { Typography } from "antd";
-
-import { getFilteredMedia, getMedias } from "../../api/mediasApi";
-
+import { getFilteredMedia, getMedias } from "../../services/mediaService";
 import "./LandingSearchBar.css";
-
 const { Paragraph } = Typography;
 
 export default function LandingSearchBar({ toggle }) {
@@ -24,10 +18,8 @@ export default function LandingSearchBar({ toggle }) {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
-  useEffect(() => {
-    setIsLoading(true);
-
-    const fetchData = setTimeout(async () => {
+  const returnFetchData = () => {
+    return setTimeout(async () => {
       var promise = null;
 
       if (inputValue.length === 0) promise = getMedias(toggle, 1, 10);
@@ -40,7 +32,11 @@ export default function LandingSearchBar({ toggle }) {
 
       setIsLoading(false);
     }, 1000);
+  };
 
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchData = returnFetchData();
     return () => clearTimeout(fetchData);
   }, [inputValue, toggle]);
 

@@ -6,6 +6,7 @@ import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 
 import "./LoginPage.css";
 import LoginPageForm from "../../components/LoginPageForm/LoginPageForm";
+import links from "../../links/links";
 
 function LoginPage() {
   return (
@@ -13,7 +14,7 @@ function LoginPage() {
       <div className="auth-page">
         <div className="auth-page-breadcrumbs">
           <Breadcrumbs separator="/">
-            <Link className="link-breadcrumb bold" to="/">
+            <Link className="link-breadcrumb bold" to={links.home.url}>
               Moviesapp
             </Link>
             <div className="auth-page-current">Login</div>

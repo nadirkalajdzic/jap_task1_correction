@@ -1,4 +1,6 @@
-import axios from "axios";
+import ApiClient from "./apiClient";
+
+let apiClient = ApiClient.createInstance("auth");
 
 export const loginUser = (email, password) => {
   const params = JSON.stringify({
@@ -6,11 +8,7 @@ export const loginUser = (email, password) => {
     password: password,
   });
 
-  return axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, params, {
-    headers: {
-      "content-type": "application/json",
-    },
-  });
+  return apiClient.post(`/login`, params);
 };
 
 export const registerUser = (name, surname, email, password) => {
@@ -21,9 +19,5 @@ export const registerUser = (name, surname, email, password) => {
     password: password,
   });
 
-  return axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, params, {
-    headers: {
-      "content-type": "application/json",
-    },
-  });
+  return apiClient.post(`/register`, params);
 };

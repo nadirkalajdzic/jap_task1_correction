@@ -13,7 +13,8 @@ import "antd/dist/antd.css";
 import popcorn from "../../popcornimg";
 import { StyledRating } from "../../components/ItemCard/Style";
 import { makeStyles } from "@material-ui/core";
-import { getMedia } from "../../api/mediasApi";
+import { getMedia } from "../../services/mediaService";
+import links from "../../links/links";
 
 const useStyles = makeStyles({
   chip: {
@@ -56,7 +57,10 @@ function SingleItemPage() {
       <div className="single-item-page">
         <div className="single-item-page-breadcrumbs">
           <Breadcrumbs separator="/">
-            <Link className="single-item-link-breadcrumb bold" to="/">
+            <Link
+              className="single-item-link-breadcrumb bold"
+              to={links.home.url}
+            >
               Moviesapp
             </Link>
             <div className="single-item-page-current">{item.title}</div>

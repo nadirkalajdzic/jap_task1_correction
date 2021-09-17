@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import { Virtuoso } from "react-virtuoso";
 
 import "./ItemList.css";
-import styled from "styled-components";
+import CustomButton from "../CustomButton/CustomButton";
 
 function ItemList({ itemList, setPageNumber }) {
   const showMore = () => setPageNumber((prevState) => prevState + 1);
@@ -22,16 +22,16 @@ function ItemList({ itemList, setPageNumber }) {
           return (
             itemList.length % 10 <= 0 && (
               <div className="item-list-show-more">
-                <Button
+                <CustomButton
                   variant="outlined"
                   style={{
                     color: "white",
                     backgroundColor: "var(--button-color)",
+                    width: 200,
                   }}
                   onClick={showMore}
-                >
-                  VIEW MORE RESULTS
-                </Button>
+                  label="VIEW MORE RESULTS"
+                />
               </div>
             )
           );

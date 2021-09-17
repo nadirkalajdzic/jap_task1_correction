@@ -1,50 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-
-import { Input, Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import { validateEmail } from "../../helpingFunctions";
-
-import { loginUser } from "../../api/authApi";
+import { loginUser } from "../../services/authService";
 import { Form } from "antd";
-
-import "./LoginPageForm.css";
-import "../AuthStyles.css";
-import useButtonStyle from "../Header/ButtonStyle";
+import "../GeneralStyles/AuthStyles.css";
 import { toast } from "react-toastify";
-
-const validStyleObj = { backgroundColor: "var(--valid-green-color)" };
-const invalidStyleObj = { backgroundColor: "var(--invalid-red-color)" };
+import CustomInput from "../CustomInput/CustomInput";
+import AuthCustomButton from "../AuthCustomButton/AuthCustomButton";
 
 function LoginPageForm() {
   const [email, setEmail] = useState("");
-  const [emailStyle, setEmailStyle] = useState({});
+  const [password, setPassword] = useState("");
+
   const [disabled, setDisabled] = useState(false);
   const history = useHistory();
 
-  const [password, setPassword] = useState("");
-  const [passwordStyle, setPasswordStyle] = useState({});
-
-  const emailChange = (e) => {
-    setEmail(e.target.value);
-    validateEmail(e.target.value)
-      ? setEmailStyle(validStyleObj)
-      : setEmailStyle(invalidStyleObj);
-  };
-
-  const passwordChange = (e) => {
-    setPassword(e.target.value);
-    e.target.value !== ""
-      ? setPasswordStyle(validStyleObj)
-      : setPasswordStyle(invalidStyleObj);
-  };
-
-  const classes = useButtonStyle();
+  const isNotEmpty = (val) => val !== "";
 
   useEffect(() => {
-    if (emailStyle === validStyleObj && passwordStyle === validStyleObj)
-      setDisabled(false);
-    else setDisabled(true);
-  }, [emailStyle, passwordStyle]);
+    validateEmail(email) && isNotEmpty(password)
+      ? setDisabled(false)
+      : setDisabled(true);
+  }, [email, password]);
 
   const login = () => {
     setDisabled(true);
@@ -52,7 +29,7 @@ function LoginPageForm() {
       .then((res) => {
         const obj = {
           token: res.data.data.token,
-          name: res.data.data.firstName + " " + res.data.data.lastName,
+          name: `${res.data.data.firstName} ${res.data.data.lastName}`,
         };
         localStorage.setItem("session", JSON.stringify(obj));
         history.push("/");
@@ -66,54 +43,29 @@ function LoginPageForm() {
     <div className="auth-page-form">
       <Form>
         <Form.Item name="email">
-          <div className="auth-page-input">
-            <div className="auth-page-single-input-label">
-              {emailStyle === invalidStyleObj ? "Invalid Email!" : "Email"}
-            </div>
-            <div className="auth-page-single-input-input">
-              <Input
-                placeholder="e.g. john.doe@gmail.com"
-                type="email"
-                value={email}
-                onChange={emailChange}
-                className="auth-form-input"
-                style={emailStyle}
-              />
-            </div>
-          </div>
+          <CustomInput
+            label="Email"
+            errorMessage="Enter a valid email"
+            placeholder="e.g. johndoe@gmail.com"
+            type="email"
+            value={email}
+            setValue={setEmail}
+            validate={validateEmail}
+          />
         </Form.Item>
         <Form.Item name="password">
-          <div className="auth-page-input">
-            <div className="auth-page-single-input-label">
-              {passwordStyle === invalidStyleObj
-                ? "Password cannot be empty"
-                : "Password"}
-            </div>
-            <div className="auth-page-single-input-input">
-              <Input
-                placeholder="Password"
-                type="password"
-                value={password}
-                onChange={passwordChange}
-                className="auth-form-input"
-                style={passwordStyle}
-              />
-            </div>
-          </div>
+          <CustomInput
+            label="Password"
+            errorMessage="Password cannot be empty"
+            placeholder="don't enter a simple password!"
+            type="password"
+            value={password}
+            setValue={setPassword}
+            validate={isNotEmpty}
+          />
         </Form.Item>
         <Form.Item>
-          <div className="auth-page-button">
-            <Button
-              className={classes.button}
-              disabled={disabled}
-              onClick={login}
-            >
-              LOGIN
-            </Button>
-            <div className="auth-page-link-to">
-              <Link to="/register">Not registered yet? Register now.</Link>
-            </div>
-          </div>
+          <AuthCustomButton disabled={disabled} onClick={login} label="LOGIN" />
         </Form.Item>
       </Form>
     </div>

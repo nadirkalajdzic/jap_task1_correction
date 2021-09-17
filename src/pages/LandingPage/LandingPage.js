@@ -11,7 +11,7 @@ import "./LandingPage.css";
 
 import { makeStyles } from "@material-ui/core";
 import ItemList from "../../components/ItemList/ItemList";
-import { getMedias } from "../../api/mediasApi";
+import { getMedias } from "../../services/mediaService";
 
 const useStyle = makeStyles({
   root: {

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import Button from "@material-ui/core/Button";
-import useButtonStyle from "./ButtonStyle";
-
+import CustomButton from "../CustomButton/CustomButton";
 import "./Header.css";
 
 function Header() {
@@ -11,8 +9,6 @@ function Header() {
   const [session, setSession] = useState(
     JSON.parse(localStorage.getItem("session"))
   );
-
-  const classes = useButtonStyle();
 
   const routeToHome = () => history.push("/");
   const routeToLogin = () => history.push("/login");
@@ -30,21 +26,15 @@ function Header() {
       <div className="header-login-or-register">
         {session == null && (
           <>
-            <Button className={classes.button} onClick={routeToLogin}>
-              LOGIN
-            </Button>
+            <CustomButton onClick={routeToLogin} label="LOGIN" />
             <div className="bold">OR</div>
-            <Button className={classes.button} onClick={routeToRegister}>
-              REGISTER
-            </Button>
+            <CustomButton onClick={routeToRegister} label="REGISTER" />
           </>
         )}
         {session != null && (
           <>
             <div style={{ fontWeight: 500 }}>User: {session.name}</div>
-            <Button className={classes.button} onClick={logout}>
-              LOGOUT
-            </Button>
+            <CustomButton onClick={logout} label="LOGOUT" />
           </>
         )}
       </div>

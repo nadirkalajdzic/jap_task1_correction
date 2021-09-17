@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LandingPage from "../pages/LandingPage/LandingPage";
 import Page404 from "../pages/Page404/Page404";
 import LoginPage from "../pages/LoginPage/LoginPage";
-
 import PrivateRoute from "./PrivateRoute";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import SingleItemPage from "../pages/SingleItemPage/SingleItemPage";
+import links from "../links/links";
 
 function Routes() {
   return (
@@ -15,39 +15,37 @@ function Routes() {
       <Switch>
         <PrivateRoute
           exact={true}
-          path="/"
+          path={links.landing.url}
           component={LandingPage}
           title="Home"
         />
         <PrivateRoute
           exact={true}
-          path="/landing"
+          path={links.home.url}
           component={LandingPage}
           title="Home"
         />
         <PrivateRoute
           exact={true}
-          path="/login"
+          path={links.login.url}
           authorize
-          isLoggedIn
           component={LoginPage}
           title="Login"
         />
         <PrivateRoute
           exact={true}
-          path="/register"
+          path={links.register.url}
           authorize
-          isLoggedIn
           component={RegisterPage}
           title="Register"
         />
         <PrivateRoute
           exact={true}
-          path="/item/:id"
+          path={links.itemId.url}
           component={SingleItemPage}
           title="Movie"
         />
-        <Route path="*" component={Page404} title="404" />
+        <Route path={links.any.url} component={Page404} title="404" />
       </Switch>
     </Router>
   );
