@@ -13,7 +13,7 @@ import "antd/dist/antd.css";
 import popcorn from "../../popcornimg";
 import { StyledRating } from "../../components/ItemCard/Style";
 import { makeStyles } from "@material-ui/core";
-import { getVideo } from "../../api/videosApi";
+import { getMedia } from "../../api/mediasApi";
 
 const useStyles = makeStyles({
   chip: {
@@ -39,7 +39,7 @@ function SingleItemPage() {
   if (params.id !== id) setId(params.id);
 
   useEffect(() => {
-    getVideo(id)
+    getMedia(id)
       .then((x) => setItem(x.data.data))
       .catch(() => history.push("/404"));
   }, [id, history]);
@@ -66,7 +66,7 @@ function SingleItemPage() {
           <div className="single-item-page-image">
             <Image
               className="single-item-img"
-              src={item.image_Url}
+              src={item.imageUrl}
               fallback={popcorn}
             />
           </div>
@@ -109,7 +109,7 @@ function SingleItemPage() {
                   <Chip
                     size="small"
                     key={`actors-id-${index}`}
-                    label={x.name + " " + x.surname}
+                    label={x.firstName + " " + x.lastName}
                     className={classes.chip}
                   />
                 );

@@ -11,7 +11,7 @@ import "./LandingPage.css";
 
 import { makeStyles } from "@material-ui/core";
 import ItemList from "../../components/ItemList/ItemList";
-import { getTopMovies, getTopShows } from "../../api/videosApi";
+import { getMedias } from "../../api/mediasApi";
 
 const useStyle = makeStyles({
   root: {
@@ -28,7 +28,7 @@ const useStyle = makeStyles({
 
 function LandingPage() {
   const [itemList, setItemList] = useState([]);
-  const [toggle, setToggle] = useState(0);
+  const [toggle, setToggle] = useState("Movie");
   const [pageNumber, setPageNumber] = useState(1);
   const classes = useStyle();
 
@@ -41,13 +41,9 @@ function LandingPage() {
   };
 
   useEffect(() => {
-    toggle === 0
-      ? getTopMovies(pageNumber, 10)
-          .then((res) => setItemList(itemList.concat(res.data.data)))
-          .catch(() => toast.error("Failed to load movies"))
-      : getTopShows(pageNumber, 10)
-          .then((res) => setItemList(itemList.concat(res.data.data)))
-          .catch(() => toast.error("Failed to load shows"));
+    getMedias(toggle, pageNumber, 10)
+      .then((res) => setItemList(itemList.concat(res.data.data)))
+      .catch(() => toast.error("Failed to load movies"));
   }, [toggle, pageNumber]);
 
   return (
@@ -71,10 +67,10 @@ function LandingPage() {
           exclusive
           onChange={handleToggle}
         >
-          <ToggleButton className={classes.root} value={0}>
+          <ToggleButton className={classes.root} value={"Movie"}>
             TOP RATED MOVIES
           </ToggleButton>
-          <ToggleButton className={classes.root} value={1}>
+          <ToggleButton className={classes.root} value={"Show"}>
             TOP RATED TV SHOWS
           </ToggleButton>
         </ToggleButtonGroup>

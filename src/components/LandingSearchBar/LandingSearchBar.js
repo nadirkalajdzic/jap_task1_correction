@@ -12,11 +12,7 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import { Typography } from "antd";
 
-import {
-  getFilteredShows,
-  getTopMovies,
-  getTopShows,
-} from "../../api/videosApi";
+import { getFilteredMedia, getMedias } from "../../api/mediasApi";
 
 import "./LandingSearchBar.css";
 
@@ -34,9 +30,8 @@ export default function LandingSearchBar({ toggle }) {
     const fetchData = setTimeout(async () => {
       var promise = null;
 
-      if (inputValue.length === 0)
-        promise = toggle === 0 ? getTopMovies() : getTopShows();
-      else if (inputValue.length >= 2) promise = getFilteredShows(inputValue);
+      if (inputValue.length === 0) promise = getMedias(toggle, 1, 10);
+      else if (inputValue.length >= 2) promise = getFilteredMedia(inputValue);
 
       if (promise != null)
         promise

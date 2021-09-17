@@ -46,7 +46,8 @@ function ItemCard({ item }) {
         <CardActionArea onClick={goToMovie}>
           <CardMedia
             className={classes.media}
-            image={item.image_Url === "" ? popcorn : item.image_Url}
+            image={item.imageUrl}
+            fallback={popcorn}
             title="Image"
           ></CardMedia>
           <div className={classes.title}>

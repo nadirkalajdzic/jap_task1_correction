@@ -15,8 +15,8 @@ export const loginUser = (email, password) => {
 
 export const registerUser = (name, surname, email, password) => {
   const params = JSON.stringify({
-    name: name,
-    surname: surname,
+    firstname: name,
+    lastName: surname,
     email: email,
     password: password,
   });

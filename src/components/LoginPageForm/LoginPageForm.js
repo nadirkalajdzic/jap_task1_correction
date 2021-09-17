@@ -52,7 +52,7 @@ function LoginPageForm() {
       .then((res) => {
         const obj = {
           token: res.data.data.token,
-          name: res.data.data.name + " " + res.data.data.surname,
+          name: res.data.data.firstName + " " + res.data.data.lastName,
         };
         localStorage.setItem("session", JSON.stringify(obj));
         history.push("/");
