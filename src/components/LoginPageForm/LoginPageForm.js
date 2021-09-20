@@ -1,31 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { validateEmail } from "../../helpingFunctions";
 import { loginUser } from "../../services/authService";
-import { Form } from "antd";
-import "../GeneralStyles/AuthStyles.css";
 import { toast } from "react-toastify";
-import CustomInput from "../CustomInput/CustomInput";
 import AuthCustomButton from "../AuthCustomButton/AuthCustomButton";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Input } from "@material-ui/core";
+import links from "../../links/links";
+
+import "./LoginPageForm.css";
 
 function LoginPageForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [disabled, setDisabled] = useState(false);
   const history = useHistory();
 
-  const isNotEmpty = (val) => val !== "";
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+  });
 
-  useEffect(() => {
-    validateEmail(email) && isNotEmpty(password)
-      ? setDisabled(false)
-      : setDisabled(true);
-  }, [email, password]);
+  const login = (values) => {
+    if (values.email === undefined || values.password === undefined) return;
 
-  const login = () => {
-    setDisabled(true);
-    loginUser(email, password)
+    loginUser(values.email, values.password)
       .then((res) => {
         const obj = {
           token: res.data.data.token,
@@ -36,38 +35,46 @@ function LoginPageForm() {
         toast.success("Logged in successfully");
       })
       .catch((err) => toast.error(err.response.data.message));
-    setDisabled(false);
   };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: LoginSchema,
+    onSubmit: login,
+  });
 
   return (
     <div className="auth-page-form">
-      <Form>
-        <Form.Item name="email">
-          <CustomInput
-            label="Email"
-            errorMessage="Enter a valid email"
-            placeholder="e.g. johndoe@gmail.com"
-            type="email"
-            value={email}
-            setValue={setEmail}
-            validate={validateEmail}
-          />
-        </Form.Item>
-        <Form.Item name="password">
-          <CustomInput
-            label="Password"
-            errorMessage="Password cannot be empty"
-            placeholder="don't enter a simple password!"
-            type="password"
-            value={password}
-            setValue={setPassword}
-            validate={isNotEmpty}
-          />
-        </Form.Item>
-        <Form.Item>
-          <AuthCustomButton disabled={disabled} onClick={login} label="LOGIN" />
-        </Form.Item>
-      </Form>
+      <form onSubmit={formik.handleSubmit} className="form-auth">
+        <Input
+          fullWidth
+          id="email"
+          name="email"
+          placeholder="Email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          type="text"
+        />
+        <Input
+          fullWidth
+          id="password"
+          name="password"
+          placeholder="Password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          type="password"
+        />
+        <AuthCustomButton
+          classNameAuth="auth-page-button"
+          type="submit"
+          link={links.register.url}
+          disabled={formik.errors.email || formik.errors.password}
+          label="LOGIN"
+        />
+      </form>
     </div>
   );
 }

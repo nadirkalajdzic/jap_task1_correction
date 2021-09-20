@@ -1,39 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Form } from "antd";
 import { registerUser } from "../../services/authService";
-import { validateEmail } from "../../helpingFunctions";
-import "../GeneralStyles/AuthStyles.css";
-import CustomInput from "../CustomInput/CustomInput";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Input } from "@material-ui/core";
 import AuthCustomButton from "../AuthCustomButton/AuthCustomButton";
+import links from "../../links/links";
+
+import "../GeneralStyles/AuthStyles.css";
 
 function RegisterPageForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRepeat, setPasswordRepeat] = useState("");
-  const [disabled, setDisabled] = useState(false);
   const history = useHistory();
 
-  useEffect(() => {
-    isNotEmpty(firstName) &&
-    isNotEmpty(lastName) &&
-    validateEmail(email) &&
-    isNotEmpty(password) &&
-    isNotEmpty(passwordRepeat) &&
-    password === passwordRepeat
-      ? setDisabled(false)
-      : setDisabled(true);
-  }, [firstName, lastName, email, password, passwordRepeat, disabled]);
+  const register = (values) => {
+    if (values.password !== values.passwordRepeat)
+      toast.error("Passwords must match");
 
-  const isNotEmpty = (val) => val !== "";
-  const isEqualToPasswordAndNotEmpty = (val) =>
-    isNotEmpty(val) && val === password;
-
-  const register = () => {
-    registerUser(firstName, lastName, email, password)
+    registerUser(
+      values.firstName,
+      values.lastName,
+      values.email,
+      values.password
+    )
       .then(() => {
         history.push("/");
         toast.success("Registered in successfully");
@@ -43,72 +32,115 @@ function RegisterPageForm() {
       });
   };
 
+  const RegisterSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+    lastName: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+    email: Yup.string().email("Invalid email").required("Required"),
+    password: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+    passwordRepeat: Yup.string()
+      .min(2, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      passwordRepeat: "",
+    },
+    validationSchema: RegisterSchema,
+    onSubmit: register,
+  });
+
   return (
     <div className="auth-page-form">
-      <Form>
-        <Form.Item>
-          <CustomInput
-            label="First Name"
-            errorMessage="Cannot be empty"
+      <form onSubmit={formik.handleSubmit} className="form-auth">
+        <div>
+          <Input
+            fullWidth
+            id="firstName"
+            name="firstName"
             placeholder="First Name"
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
             type="text"
-            value={firstName}
-            setValue={setFirstName}
-            validate={isNotEmpty}
           />
-        </Form.Item>
-        <Form.Item>
-          <CustomInput
-            label="Last Name"
-            errorMessage="Cannot be empty"
+          {formik.errors.firstName}
+        </div>
+        <div>
+          <Input
+            fullWidth
+            id="lastName"
+            name="lastName"
             placeholder="Last Name"
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
             type="text"
-            value={lastName}
-            setValue={setLastName}
-            validate={isNotEmpty}
           />
-        </Form.Item>
-        <Form.Item>
-          <CustomInput
-            label="Email"
-            errorMessage="Enter a valid email"
-            placeholder="e.g. johndoe@gmail.com"
-            type="email"
-            value={email}
-            setValue={setEmail}
-            validate={validateEmail}
+          {formik.errors.lastName}
+        </div>
+        <div>
+          <Input
+            fullWidth
+            id="email"
+            name="email"
+            placeholder="Email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            type="text"
           />
-        </Form.Item>
-        <Form.Item>
-          <CustomInput
-            label="Password"
-            errorMessage="Password cannot be empty"
-            placeholder="don't enter a simple password!"
+          {formik.errors.email}
+        </div>
+        <div>
+          <Input
+            fullWidth
+            id="password"
+            name="password"
+            placeholder="Password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
             type="password"
-            value={password}
-            setValue={setPassword}
-            validate={isNotEmpty}
           />
-        </Form.Item>
-        <Form.Item>
-          <CustomInput
-            label="Password repeat"
-            errorMessage="Passwords must match"
-            placeholder="repeat password from above"
+          {formik.errors.password}
+        </div>
+        <div>
+          <Input
+            fullWidth
+            id="passwordRepeat"
+            name="passwordRepeat"
+            placeholder="Password repeat"
+            value={formik.values.passwordRepeat}
+            onChange={formik.handleChange}
             type="password"
-            value={passwordRepeat}
-            setValue={setPasswordRepeat}
-            validate={isEqualToPasswordAndNotEmpty}
           />
-        </Form.Item>
-        <Form.Item>
-          <AuthCustomButton
-            disabled={disabled}
-            onClick={register}
-            label="REGISTER"
-          />
-        </Form.Item>
-      </Form>
+          {formik.errors.passwordRepeat}
+        </div>
+        <AuthCustomButton
+          link={links.login.url}
+          classNameAuth="auth-page-button"
+          type="submit"
+          disabled={
+            formik.errors.firstName ||
+            formik.errors.lastName ||
+            formik.errors.email ||
+            formik.errors.password ||
+            formik.values.password !== formik.values.passwordRepeat
+          }
+          label="REGISTER"
+        />
+      </form>
     </div>
   );
 }

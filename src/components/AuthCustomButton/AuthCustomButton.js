@@ -1,14 +1,25 @@
 import React from "react";
-import links from "../../links/links";
 import { Link } from "react-router-dom";
 import CustomButton from "../CustomButton/CustomButton";
 
-function AuthCustomButton({ disabled, onClick, label }) {
+function AuthCustomButton({
+  disabled,
+  onClick,
+  label,
+  type,
+  classNameAuth,
+  link,
+}) {
   return (
-    <div className="auth-page-button">
-      <CustomButton disabled={disabled} onClick={onClick} label={label} />
+    <div className={classNameAuth != null ? classNameAuth : ""}>
+      <CustomButton
+        disabled={disabled}
+        onClick={onClick}
+        label={label}
+        type={type}
+      />
       <div className="auth-page-link-to">
-        <Link to={links.register.url}>Not registered yet? Register now.</Link>
+        <Link to={link}>Not registered yet? Register now.</Link>
       </div>
     </div>
   );

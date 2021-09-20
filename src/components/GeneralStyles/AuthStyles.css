@@ -37,17 +37,6 @@
   width: 35%;
 }
 
-.auth-page-single-input-label {
-  margin-top: 25px;
-  color: var(--black-color);
-  font-weight: 500;
-}
-
-.auth-page-single-input-input {
-  margin-top: 10px;
-  color: var(--black-color);
-}
-
 .auth-page-button {
   margin: 50px auto;
   padding-bottom: 100px;
@@ -63,4 +52,12 @@
 
 .auth-page-link-to {
   margin-top: 10px;
+}
+
+.form-auth {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: clamp(300px, 70%, 600px);
+  gap: 20px;
 }
