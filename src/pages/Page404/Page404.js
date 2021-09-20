@@ -17,6 +17,7 @@ function Page404() {
           <CustomButton
             onClick={routeTo}
             label="Back Home"
+            style={{ width: 200 }}
             startIcon={<ArrowBackIcon />}
           />
         </div>

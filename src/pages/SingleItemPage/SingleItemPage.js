@@ -76,7 +76,11 @@ function SingleItemPage() {
           </div>
           <div className="single-item-page-title">{item.title}</div>
           <div className="single-item-page-rating">
-            <p>Rating: {item.averageRating.toFixed(2)}</p>
+            {item.averageRating === 0 ? (
+              <p>Not rated yet</p>
+            ) : (
+              <p>Rating: {item.averageRating.toFixed(2)}</p>
+            )}
             <div>
               <StyledRating
                 name="read-only"

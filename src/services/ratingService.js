@@ -5,10 +5,10 @@ let apiClient = ApiClient.createInstance(
   JSON.parse(localStorage.getItem("session"))?.token
 );
 
-export const addRating = (rating, videoId) => {
+export const addRating = (rating, mediaId) => {
   const params = {
     value: rating,
-    VideoId: videoId,
+    mediaId,
   };
 
   return apiClient.post(`/add`, params);
