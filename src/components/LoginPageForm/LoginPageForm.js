@@ -8,8 +8,6 @@ import * as Yup from "yup";
 import { Input } from "@material-ui/core";
 import links from "../../links/links";
 
-import "./LoginPageForm.css";
-
 function LoginPageForm() {
   const history = useHistory();
 
