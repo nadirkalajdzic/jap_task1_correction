@@ -4,9 +4,9 @@ let apiClient = ApiClient.createInstance("medias");
 
 export const getMedias = (mediaType, pageNumber, pageSize) => {
   return apiClient.get(
-    `?MediaType=${mediaType}&PageNumber=${
+    `?MediaType=${mediaType}&Pagination.PageNumber=${
       pageNumber == null ? 1 : pageNumber
-    }&PageSize=${pageSize == null ? 10 : pageSize}`
+    }&Pagination.PageSize=${pageSize == null ? 10 : pageSize}`
   );
 };
 

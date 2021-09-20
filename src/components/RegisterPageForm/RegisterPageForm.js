@@ -14,6 +14,14 @@ function RegisterPageForm() {
   const history = useHistory();
 
   const register = (values) => {
+    if (
+      values.firstName === undefined ||
+      values.lastName === undefined ||
+      values.email === undefined ||
+      values.password === undefined
+    )
+      return;
+
     if (values.password !== values.passwordRepeat)
       toast.error("Passwords must match");
 
