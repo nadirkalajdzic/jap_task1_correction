@@ -85,7 +85,7 @@ function SingleItemPage() {
               <StyledRating
                 name="read-only"
                 style={{ marginBottom: 10, height: 30 }}
-                value={item.averageRating.toFixed(2)}
+                value={parseFloat(item.averageRating.toFixed(2))}
                 precision={0.1}
                 readOnly
               />
