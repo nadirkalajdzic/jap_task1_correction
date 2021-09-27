@@ -88,7 +88,7 @@ function ItemCard({ item }) {
         <CardActions className={classes.align}>
           <CustomButton
             variant="outlined"
-            label="GO TO MOVIE"
+            label="VIEW INFO"
             onClick={goToMovie}
             style={{
               width: 150,
